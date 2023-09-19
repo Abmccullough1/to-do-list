@@ -4,60 +4,51 @@ var ul = document.querySelector("ul");
 var item = document.getElementsByTagName("li");
 
 function inputLength(){
-	return input.value.length;
+    return input.value.length;
 } 
 
 function listLength(){
-	return item.length;
+    return item.length;
 }
 
 function createListElement() {
-	// implement creates an element "li"
-	// implement makes text from input field the li text
-	// implement adds li to ul
-	// implement Reset text input field
+    var li = document.createElement("li"); // Create a new li element
+    li.appendChild(document.createTextNode(input.value)); // Set its text content to the input value
+    ul.appendChild(li); // Append it to the ul
 
+    // Reset text input field
+    input.value = "";
 
-	//START STRIKETHROUGH
-	// because it's in the function, it only adds it for new items
-	function crossOut() {
-		//implement me
-	}
+    function crossOut() {
+        li.classList.toggle("done"); // Toggle the 'done' class on click
+    }
 
-	li.addEventListener("click",crossOut);
-	//END STRIKETHROUGH
+    li.addEventListener("click", crossOut);
 
+    // START ADD DELETE BUTTON
+    var dBtn = document.createElement("button"); // Create a delete button
+    dBtn.appendChild(document.createTextNode("X")); // Set its text content to 'X'
+    li.appendChild(dBtn); // Append it to the li
 
-	// START ADD DELETE BUTTON
+    dBtn.addEventListener("click", deleteListItem); // Add event listener to the delete button
+    // END ADD DELETE BUTTON
 
-		//Use the implemented function from below here
-	
-	// END ADD DELETE BUTTON
-
-
-	//ADD CLASS DELETE (DISPLAY: NONE)
-	function deleteListItem(){
-		//Implement me
-	}
-	//END ADD CLASS DELETE
+    function deleteListItem() {
+        li.classList.add("delete"); // Add 'delete' class to the li
+    }
 }
 
-
 function addListAfterClick(){
-	if (inputLength() > 0) { //makes sure that an empty input field doesn't create a li
-		createListElement();
-	}
+    if (inputLength() > 0) {
+        createListElement(); // Create a new list element if input is not empty
+    }
 }
 
 function addListAfterKeypress(event) {
-	if (inputLength() > 0 && event.which ===13) { //this now looks to see if you hit "enter"/"return"
-		//the 13 is the enter key's keycode, this could also be display by event.keyCode === 13
-		createListElement();
-	} 
+    if (inputLength() > 0 && event.which === 13) {
+        createListElement(); // Create a new list element on 'Enter' key press
+    } 
 }
 
-
-enterButton.addEventListener("click",addListAfterClick);
-
+enterButton.addEventListener("click", addListAfterClick);
 input.addEventListener("keypress", addListAfterKeypress);
-
